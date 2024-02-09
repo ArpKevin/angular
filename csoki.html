@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <title>Document</title>
+
+    <style>
+        table, table th, table td{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body ng-app="csokiApp" ng-controller="csokiController">
+    <h1>{{title}}</h1>
+
+    <table>
+        <tr>
+            <th>id</th>
+            <th>nev</th>
+            <th>ara</th>
+            <th>raktaron</th>
+        </tr>
+        <tr ng-repeat="csoki in csokis">
+            <td>{{csoki.id}}</td>
+            <td>{{csoki.nev}}</td>
+            <td>{{csoki.ara}}</td>
+            <td>{{csoki.raktaron}}</td>
+        </tr>
+    </table>
+
+    <script>
+        let app = angular.module('csokiApp', []);
+        app.controller('csokiController', function($scope, $http){
+            $scope.title = "Csokik";
+            console.log($scope.title);
+            
+            $scope.csokis = [];
+            $http.get("http://127.0.0.1/csokishopBackendXampphoz/read.php")
+                .then(function(response){
+                    $scope.csokis = response.data;
+                    console.log($scope.csokis);  
+                })
+
+            
+
+
+        })
+    </script>
+</body>
+</html>
